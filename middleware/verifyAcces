@@ -1,0 +1,46 @@
+import User from "../models/User_model.js";
+import {key} from "../secret.js";
+import jwt  from "jsonwebtoken";
+
+const verifyToken = (req, res, next) => {
+    let token = req.headers["x-access-token"];
+    if (!token) {
+      return res.status(403).send({
+        message: "No token provided!"
+      });
+    }
+    jwt.verify(token, key.secret, (err, decoded) => {
+      if (err) {
+        return res.status(401).send({
+          message: "Unauthorized!"
+        });
+      }
+      req.userId = decoded.id;
+      next();
+    });
+  };
+
+/* verify if the user is an admin
+const isAdmin = (req, res, next) => {
+    User.findByPk(req.userId).then(user => {
+      
+          if (user.statut === "Admin") {
+            next();
+            return;
+          }
+        
+        res.status(403).send({
+          message: "Require Admin Role!"
+        });
+        return;
+      });
+    } */
+
+
+            const authJwt = {
+                verifyToken: verifyToken,
+                isAdmin: null,
+
+              };
+
+              export default authJwt ;
