@@ -89,7 +89,7 @@ export const Login = async (req, res) => {
         }
         var passwordIsValid = bcrypt.compareSync(
           req.body.psw,
-          user.psw
+          user.PSW
         );
         if (!passwordIsValid) {
           return res.status(401).send({
@@ -97,7 +97,7 @@ export const Login = async (req, res) => {
             message: "Invalid Password!"
           });
         }
-        var token = jwt.sign({ CIN: user.cin }, key.secret, {
+        var token = jwt.sign({ CIN: user.CIN }, key.secret, {
           expiresIn: 86400 // 24 hours
         });
         res.status(200).send({
