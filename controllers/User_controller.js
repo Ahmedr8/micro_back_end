@@ -1,16 +1,15 @@
-const db = require("../models");
-const User = db.User;
-const Op = db.Sequelize.Op;
-
+const User = require("../models/User_model");
+const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+const { key } = require("../secret.js");
 // Create and Save a new User
 exports.create = (req, res) => {
-
   const user = {
     FirstName: req.body.FirstName,
     LastName: req.body.LastName,
-    CIN: req.body.CIN,
+    CIN: req.body.cin,
     Email: req.body.Email,
-    PSW: req.body.PSW
+    PSW: bcrypt.hashSync(req.body.psw, 8)
   };
 
   User.create(user)
@@ -56,7 +55,7 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with cin=" + cin
+          message: "Error retrieving User with cin=" + cin
         });
       });
 };
@@ -77,7 +76,7 @@ exports.deleteAll = (req, res) => {
 };
 
 // Login for User.
-export const Login = async (req, res) => {
+exports.Login = async (req, res) => {
     await User.findOne({
       where: {
         CIN: req.body.cin

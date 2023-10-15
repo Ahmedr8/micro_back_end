@@ -1,21 +1,21 @@
-module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define("User", {
+const db = require("../db.config");
+
+    const User = db.sequelize.define("User", {
       FirstName: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
       },
       LastName: {
-        type: Sequelize.STRING
+        type:  db.Sequelize.STRING
       },
       CIN: {
-        type: Sequelize.BIGINT
+        type:  db.Sequelize.BIGINT
       },
       Email: {
-        type: Sequelize.STRING
+        type:  db.Sequelize.STRING
       },
       PSW: {
-        type: Sequelize.STRING
+        type:  db.Sequelize.STRING
       }
     });
   
-    return User;
-  };
+    module.exports = User;

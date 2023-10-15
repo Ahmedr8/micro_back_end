@@ -1,6 +1,6 @@
-import User from "../models/User_model.js";
-import {key} from "../secret.js";
-import jwt  from "jsonwebtoken";
+const User = require("../models/User_model");
+const { key } = require("../secret.js");
+const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
@@ -43,4 +43,4 @@ const isAdmin = (req, res, next) => {
 
               };
 
-              export default authJwt ;
+              module.exports = authJwt;
