@@ -41,7 +41,7 @@ exports.findAll = (req, res) => {
 
 // Find a single User with CIN
 exports.findOne = (req, res) => {
-    const cin = req.params.cin;
+    const cin = req.params.id;
 
     User.findByPk(cin)
       .then(data => {
@@ -67,7 +67,27 @@ exports.update = (req, res) => {
 
 // Delete a User with the specified id in the request
 exports.delete = (req, res) => {
-  
+  const id = req.params.id;
+
+  User.destroy({
+    where: { CIN: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "User was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete User with id=${id}. Maybe User was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete User with id=" + id
+      });
+    });
 };
 
 // Delete all Users from the database.
@@ -75,11 +95,11 @@ exports.deleteAll = (req, res) => {
   
 };
 
-// Login for User.
+// Login for User by email.
 exports.Login = async (req, res) => {
     await User.findOne({
       where: {
-        CIN: req.body.cin
+        Email: req.body.email
       }
     })
       .then(user => {
