@@ -9,7 +9,7 @@ exports.create = (req, res) => {
     LastName: req.body.LastName,
     NIC: req.body.NIC,
     email: req.body.email,
-    statuts: req.body.status,
+    status: req.body.status,
     PSW: bcrypt.hashSync(req.body.PSW, 8)
   };
 
