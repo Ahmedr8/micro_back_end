@@ -24,7 +24,7 @@ const verifyToken = (req, res, next) => {
 const isAdmin = (req, res, next) => {
     User.findByPk(req.body.userId).then(user => {
       
-          if (user.statuts === 1) {
+          if (user.status === 1) {
             next();
             return;
           }
