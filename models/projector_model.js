@@ -1,6 +1,6 @@
 const db = require("../db.config");
 
-    const proj = db.sequelize.define("Projector", {
+    const Proj = db.sequelize.define("Projector", {
       brand: {
         type: db.Sequelize.STRING
       },
@@ -18,4 +18,4 @@ const db = require("../db.config");
       }
     });
   
-    module.exports = User;
+    module.exports = Proj;
