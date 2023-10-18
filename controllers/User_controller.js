@@ -125,7 +125,7 @@ exports.Login = async (req, res) => {
             FirstName: user.FirstName,
             LastName: user.LastName,
             email: user.email,
-            statuts: user.status,
+            status: user.status,
             accessToken: token
           });
         
