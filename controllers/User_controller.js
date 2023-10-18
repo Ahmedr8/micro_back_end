@@ -50,20 +50,49 @@ exports.findOne = (req, res) => {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Cannot find User with cin=${cin}.`
+            message: `Cannot find User with id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving User with cin=" + cin
+          message: "Error retrieving User with id=" + id
         });
       });
 };
 
 // Update a User by the id in the request
 exports.update = (req, res) => {
-  
+  const id = req.params.id;
+  const user = {
+    FirstName: req.body.FirstName,
+    LastName: req.body.LastName,
+    NIC: req.body.NIC,
+    email: req.body.email,
+    status: req.body.status,
+    PSW: bcrypt.hashSync(req.body.PSW, 8)
+  };
+
+
+  Tutorial.update(user, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "User was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating User with id=" + id
+      });
+    });
 };
 
 // Delete a User with the specified id in the request
@@ -71,7 +100,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   User.destroy({
-    where: { userId: id }
+    where: { id: id }
   })
     .then(num => {
       if (num == 1) {

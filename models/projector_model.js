@@ -1,19 +1,16 @@
 const db = require("../db.config");
 
-    const User = db.sequelize.define("Projector", {
-      FirstName: {
+    const proj = db.sequelize.define("Projector", {
+      brand: {
         type: db.Sequelize.STRING
       },
-      LastName: {
-        type:  db.Sequelize.STRING
-      },
-      NIC: {
+      serialNumber: {
         type:  db.Sequelize.BIGINT
       },
-      email: {
-        type:  db.Sequelize.STRING
+      nbrCables: {
+        type:  db.Sequelize.INTEGER
       },
-      PSW: {
+      comment: {
         type:  db.Sequelize.STRING
       },
       status: {
