@@ -74,7 +74,7 @@ exports.update = (req, res) => {
   };
 
 
-  Tutorial.update(user, {
+  User.update(user, {
     where: { id: id }
   })
     .then(num => {
