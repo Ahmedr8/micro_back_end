@@ -17,16 +17,16 @@ module.exports = app => {
   
   
     // Retrieve a single user with id
-    router.get("/:id", users.findOne);
+    router.get("/:id",[authJwt.verifyToken], users.findOne);
   
     // Update a user with id
-    router.put("/:id", users.update);
+    router.put("/:id",[authJwt.verifyToken], users.update);
   
     // Delete a user with id
-    router.delete("/:id", users.delete);
+    router.delete("/:id",[authJwt.verifyToken,authJwt.isAdmin], users.delete);
   
     // Delete all users
-    router.delete("/", users.deleteAll);
+    router.delete("/",[authJwt.verifyToken,authJwt.isAdmin], users.deleteAll);
   
     app.use('/api/users', router);
   };

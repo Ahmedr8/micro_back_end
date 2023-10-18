@@ -20,11 +20,11 @@ const verifyToken = (req, res, next) => {
     });
   };
 
-/* verify if the user is an admin
+/* verify if the user is an admin */
 const isAdmin = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
+    User.findByPk(req.body.userId).then(user => {
       
-          if (user.statut === "Admin") {
+          if (user.statuts === 1) {
             next();
             return;
           }
@@ -34,12 +34,12 @@ const isAdmin = (req, res, next) => {
         });
         return;
       });
-    } */
+    } 
 
 
             const authJwt = {
                 verifyToken: verifyToken,
-                isAdmin: null,
+                isAdmin: isAdmin,
 
               };
 

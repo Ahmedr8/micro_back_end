@@ -7,8 +7,9 @@ exports.create = (req, res) => {
   const user = {
     FirstName: req.body.FirstName,
     LastName: req.body.LastName,
-    CIN: req.body.cin,
-    Email: req.body.Email,
+    NIC: req.body.NIC,
+    email: req.body.email,
+    statuts: req.body.status,
     PSW: bcrypt.hashSync(req.body.psw, 8)
   };
 
@@ -41,9 +42,9 @@ exports.findAll = (req, res) => {
 
 // Find a single User with CIN
 exports.findOne = (req, res) => {
-    const cin = req.params.id;
+    const id = req.params.id;
 
-    User.findByPk(cin)
+    User.findByPk(id)
       .then(data => {
         if (data) {
           res.send(data);
@@ -70,7 +71,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   User.destroy({
-    where: { CIN: id }
+    where: { userId: id }
   })
     .then(num => {
       if (num == 1) {
@@ -99,7 +100,7 @@ exports.deleteAll = (req, res) => {
 exports.Login = async (req, res) => {
     await User.findOne({
       where: {
-        Email: req.body.email
+        email: req.body.email
       }
     })
       .then(user => {
@@ -107,7 +108,7 @@ exports.Login = async (req, res) => {
           return res.status(404).send({ message: "User Not found." });
         }
         var passwordIsValid = bcrypt.compareSync(
-          req.body.psw,
+          req.body.PSW,
           user.PSW
         );
         if (!passwordIsValid) {
@@ -116,15 +117,15 @@ exports.Login = async (req, res) => {
             message: "Invalid Password!"
           });
         }
-        var token = jwt.sign({ CIN: user.CIN }, key.secret, {
-          expiresIn: 86400 // 24 hours
+        var token = jwt.sign({ NIC: user.NIC }, key.secret, {
+          expiresIn: 259200 // 3 days
         });
         res.status(200).send({
-            cin: user.CIN,
+            NIC: user.NIC,
             FirstName: user.FirstName,
             LastName: user.LastName,
-            Email: user.Email,
-            statut: null,
+            email: user.email,
+            statuts: user.status,
             accessToken: token
           });
         
