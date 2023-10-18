@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
 
 /* verify if the user is an admin */
 const isAdmin = (req, res, next) => {
-    User.findByPk(req.body.id).then(user => {
+    User.findByPk(req.userId).then(user => {
       
           if (user.status === 1) {
             next();
