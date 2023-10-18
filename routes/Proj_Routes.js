@@ -1,7 +1,7 @@
 
 module.exports = app => {
     const authJwt = require("../middleware/verifyAcces.js");
-      const Projector = require("../controllers/Projector_controller.js");
+      const Projector = require("../controllers/Proj_controller.js");
     
       
       var router = require("express").Router();
