@@ -27,5 +27,5 @@ module.exports = app => {
       // Delete all Projector
       router.delete("/",[authJwt.verifyToken,authJwt.isAdmin], Projector.deleteAll);
     
-      app.use('/api/Projector', router);
+      app.use('/api/Projectors', router);
     };

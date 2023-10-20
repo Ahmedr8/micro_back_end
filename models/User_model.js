@@ -19,6 +19,9 @@ const db = require("../db.config");
       status: {
         type:  db.Sequelize.INTEGER
       }
-    });
+    },{
+      freezeTableName: true,
+      
+  });
   
     module.exports = User;

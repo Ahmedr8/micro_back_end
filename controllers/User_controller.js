@@ -146,7 +146,7 @@ exports.Login = async (req, res) => {
             message: "Invalid Password!"
           });
         }
-        var token = jwt.sign({ NIC: user.NIC }, key.secret, {
+        var token = jwt.sign({ id: user.id }, key.secret, {
           expiresIn: 259200 // 3 days
         });
         res.status(200).send({

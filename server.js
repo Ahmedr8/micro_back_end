@@ -29,7 +29,7 @@ db.sequelize.sync()
 // simple route
 require("./routes/User_Routes")(app);
 require("./routes/Proj_Routes")(app);
-
+require("./routes/Hyst_Routes")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

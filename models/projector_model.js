@@ -1,6 +1,6 @@
 const db = require("../db.config");
 
-    const Proj = db.sequelize.define("Projector", {
+    const Proj = db.sequelize.define("Projectors", {
       brand: {
         type: db.Sequelize.STRING
       },
@@ -16,6 +16,9 @@ const db = require("../db.config");
       status: {
         type:  db.Sequelize.INTEGER
       }
-    });
+    },{
+      freezeTableName: true,
+      
+  });
   
     module.exports = Proj;

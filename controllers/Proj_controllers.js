@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { key } = require("../secret.js");
 // Create and Save a new Proj
 exports.create = (req, res) => {
-  const Proj = {
+  const proj = {
     brand: req.body.brand,
     serialNumber: req.body.serialNumber,
     status: req.body.status,
@@ -12,7 +12,7 @@ exports.create = (req, res) => {
     comment:req.body.comment,
   };
 
-  Proj.create(Proj)
+  Proj.create(proj)
     .then(data => {
       res.send(data);
     })
@@ -63,7 +63,7 @@ exports.findOne = (req, res) => {
 // Update a Proj by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  const Proj = {
+  const proj = {
     brand: req.body.brand,
     serialNumber: req.body.serialNumber,
     status: req.body.status,
@@ -72,7 +72,7 @@ exports.update = (req, res) => {
   };
 
 
-  Proj.update(Proj, {
+  Proj.update(proj, {
     where: { id: id }
   })
     .then(num => {
