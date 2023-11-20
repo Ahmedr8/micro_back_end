@@ -17,7 +17,7 @@ const db = require("../db.config");
         type:  db.Sequelize.STRING
       },
       status: {
-        type:  db.Sequelize.INTEGER
+        type:  db.Sequelize.BOOLEAN
       },
       id: {
         type:  db.Sequelize.BIGINT,
