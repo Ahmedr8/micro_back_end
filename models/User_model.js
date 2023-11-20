@@ -18,7 +18,10 @@ const db = require("../db.config");
       },
       status: {
         type:  db.Sequelize.INTEGER
-      }
+      },
+      id: {
+        type:  db.Sequelize.BIGINT
+      },
     },{
       freezeTableName: true,
       
