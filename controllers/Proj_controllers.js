@@ -2,6 +2,7 @@ const Proj = require("../models/projector_model");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const { key } = require("../secret.js");
+const db = require("../db.config");
 // Create and Save a new Proj
 exports.create = (req, res) => {
   const proj = {
@@ -58,6 +59,35 @@ exports.findOne = (req, res) => {
           message: "Error retrieving Proj with id=" + id
         });
       });
+};
+
+// Find Projectors with user id
+exports.findAllByUser =async (req, res) => {
+  const user_id = req.params.id;
+  try{
+    ch='0'
+    const Projector_rented= await db.sequelize.query('SELECT * from "Projectors" p,"Hystorique" h where p.id=h.proj_id and h.status=? and h.user_id=?',
+    {replacements: [ch,user_id],
+      type: db.sequelize.QueryTypes.SELECT
+  });
+  proj_id= Projector_rented[0].id
+  Projector_rented[0].rent="true"
+  const Projectors= await db.sequelize.query('SELECT * from "Projectors" p where p.id!=?',
+    {replacements: [proj_id],
+      type: db.sequelize.QueryTypes.SELECT
+  });
+  Projectors.forEach((proj) => proj.rent='false');
+  Projectors.push(Projector_rented[0])
+    let tosend=[Projectors];
+    res.json({list:tosend});
+  }catch (error) {
+              
+      console.log(error);
+      res.status(500).send({
+        message: "Error retrieving Projectors with user id=" + user_id
+      });
+    }
+
 };
 
 // Update a Proj by the id in the request

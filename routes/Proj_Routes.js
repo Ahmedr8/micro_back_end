@@ -13,6 +13,9 @@ module.exports = app => {
     
       // Retrieve all Projector
       router.get("/",[authJwt.verifyToken], Projector.findAll);
+
+      // Retrieve all Projector by user id
+      router.get("/all/:id",[authJwt.verifyToken], Projector.findAllByUser);
     
     
       // Retrieve a single Projector with id
