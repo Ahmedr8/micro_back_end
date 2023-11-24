@@ -78,8 +78,8 @@ exports.findAllByUser =async (req, res) => {
   });
   Projectors.forEach((proj) => proj.rent='false');
   Projectors.push(Projector_rented[0])
-    let tosend=[Projectors];
-    res.json({list:tosend});
+    
+    res.json(Projectors);
   }catch (error) {
               
       console.log(error);

@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const { key } = require("../secret.js");
 // Create and Save a new Hyst
-exports.rent = (req, res) => {
+exports.rent = async (req, res) => {
   const hyst = {
     proj_id: req.body.proj_id,
     user_id: req.body.user_id,
@@ -11,17 +11,30 @@ exports.rent = (req, res) => {
     end_date:req.body.end_date,
     status:0
   };
+  await Hyst.findOne({
+    where: {
+      user_id: req.body.user_id,
+      status:'0'
+    }
+  })
+    .then(rent => {
+      if (!rent) {
 
-  Hyst.create(hyst)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Hyst."
-      });
+        Hyst.create(hyst)
+          .then(data => {
+            res.send(data);
+          })
+          .catch(err => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while creating the Hyst."
+            });
+          });
+      }else{
+        return res.status(404).send({ message: "you already have a rented projector!" });
+      }
     });
+    
 };
 
 // Retrieve all Hysts from the database.
