@@ -27,6 +27,8 @@ module.exports = app => {
   
     // Delete all user
     router.delete("/",[authJwt.verifyToken,authJwt.isAdmin], user.deleteAll);
+ 
+  router.put("/:id/change-password",user.resetPassword);
   
     app.use('/api/users', router);
   };
