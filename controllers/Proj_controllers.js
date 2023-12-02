@@ -86,6 +86,7 @@ exports.findAllByUser =async (req, res) => {
       res.status(500).send({
         message: "Error retrieving Projectors with user id=" + user_id
       });
+      
     }
 
 };
