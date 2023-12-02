@@ -21,7 +21,8 @@ const db = require("../db.config");
       },
       id: {
         type:  db.Sequelize.BIGINT,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
       },
     },{
       freezeTableName: true,
