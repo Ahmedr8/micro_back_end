@@ -21,6 +21,9 @@ module.exports = app => {
       // Retrieve a single Projector with id
       router.get("/:id",[authJwt.verifyToken], Projector.findOne);
     
+      // Retrieve count projectors by status
+      router.get("/get/count", [authJwt.verifyToken], Projector.countProjectors);
+  
       // Update a Projector with id
       router.put("/:id",[authJwt.verifyToken], Projector.update);
     
@@ -29,6 +32,7 @@ module.exports = app => {
     
       // Delete all Projector
       router.delete("/",[authJwt.verifyToken,authJwt.isAdmin], Projector.deleteAll);
-    
+
+
       app.use('/api/Projectors', router);
     };

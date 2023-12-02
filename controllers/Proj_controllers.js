@@ -60,6 +60,40 @@ exports.findOne = (req, res) => {
         });
       });
 };
+// get number of projectors by status
+exports.countProjectors = async (req, res) => {
+  try {
+    const AllProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors', {
+      type: db.sequelize.QueryTypes.SELECT
+    }
+    );
+    const AvialableProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors" where status=0', {
+      type: db.sequelize.QueryTypes.SELECT
+    }
+    );
+    const UnavailableProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors" where status=1', {
+      type: db.sequelize.QueryTypes.SELECT
+    }
+    );
+    const ToFixProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors where status=2', {
+      type: db.sequelize.QueryTypes.SELECT
+    }
+    );
+    res.json({
+      allProjectorsCount: AllProjectors[0].count,
+      availableProjectorsCount: AvailableProjectors[0].count,
+      unavailableProjectorsCount: UnavailableProjectors[0].count,
+      toFixProjectorsCount: ToFixProjectors[0].count
+    });
+  }
+  catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error retrieving number of projectors"
+    });
+  }
+
+}
 
 // Find Projectors with user id
 exports.findAllByUser =async (req, res) => {
@@ -80,15 +114,13 @@ exports.findAllByUser =async (req, res) => {
   Projectors.push(Projector_rented[0])
     
     res.json(Projectors);
-  }catch (error) {
-              
+  }catch (error) {        
       console.log(error);
       res.status(500).send({
         message: "Error retrieving Projectors with user id=" + user_id
       });
       
     }
-
 };
 
 // Update a Proj by the id in the request
