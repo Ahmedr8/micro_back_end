@@ -163,4 +163,27 @@ exports.Login = async (req, res) => {
       .catch(err => {
         res.status(500).send({ message: err.message });
       });
+}
+exports.resetPassword = async (req, res) => {
+  const id = req.params.id;
+  await User.findOne({
+    where: {
+      id
     }
+  })
+    .then(user => {
+      if (req.body.oldPSW == undefined || req.body.oldPSW == null || req.body.newPSW == undefined || req.body.newPSW == null) return res.status(404).send({ message: "Please specify the oldPSW field and the newPSW field" }); 
+      if (!user) return res.status(404).send({ message: "User Not found." });
+      var passwordIsValid = bcrypt.compareSync(req.body.oldPSW, user.PSW);
+      console.log(passwordIsValid)
+      if (!passwordIsValid) return res.status(401).send({ message: "Invalid Password!" });
+      User.update({ ...user, PSW: bcrypt.hashSync(req.body.newPSW,8) }, {
+        where: {
+          id
+        }
+      }).then(num => num == 1 ?
+        res.status(200).send({ message: "Password updated successfully !" }) :
+        res.status(500).send({ message: `Cannot update User with id=${id}. Maybe User was not found!` }))  
+    })
+    
+}
