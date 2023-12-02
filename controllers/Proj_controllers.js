@@ -63,7 +63,7 @@ exports.findOne = (req, res) => {
 // get number of projectors by status
 exports.countProjectors = async (req, res) => {
   try {
-    const AllProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors', {
+    const AllProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors"', {
       type: db.sequelize.QueryTypes.SELECT
     }
     );
@@ -75,13 +75,13 @@ exports.countProjectors = async (req, res) => {
       type: db.sequelize.QueryTypes.SELECT
     }
     );
-    const ToFixProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors where status=2', {
+    const ToFixProjectors = await db.sequelize.query('SELECT COUNT(*) from "Projectors" where status=2', {
       type: db.sequelize.QueryTypes.SELECT
     }
     );
     res.json({
       allProjectorsCount: AllProjectors[0].count,
-      availableProjectorsCount: AvailableProjectors[0].count,
+      availableProjectorsCount: AvialableProjectors[0].count,
       unavailableProjectorsCount: UnavailableProjectors[0].count,
       toFixProjectorsCount: ToFixProjectors[0].count
     });
@@ -161,7 +161,8 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Proj.destroy({
-    where: { id: id }
+    where: { id: id,
+      status:'0'}
   })
     .then(num => {
       if (num == 1) {

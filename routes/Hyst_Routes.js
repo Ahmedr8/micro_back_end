@@ -7,7 +7,7 @@ module.exports = app => {
       var router = require("express").Router();
     
       // Create a new Hystorique
-      router.post("/",[authJwt.verifyToken], Hystorique.rent);
+      router.post("/",[authJwt.verifyToken,authJwt.isProf], Hystorique.rent);
   
 
     
@@ -19,7 +19,7 @@ module.exports = app => {
       router.get("/:id",[authJwt.verifyToken], Hystorique.findOne);
     
       // Update a Hystorique with id
-      router.put("/:id",[authJwt.verifyToken], Hystorique.return);
+      router.put("/:id",[authJwt.verifyToken,authJwt.isProf], Hystorique.return);
     
       // Delete a Hystorique with id
       router.delete("/:id",[authJwt.verifyToken,authJwt.isAdmin], Hystorique.delete);
