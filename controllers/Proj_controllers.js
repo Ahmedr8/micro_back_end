@@ -94,6 +94,7 @@ exports.countProjectors = async (req, res) => {
   }
 
 }
+
 // Find Projectors with user id
 exports.findAllByUser =async (req, res) => {
   const user_id = req.params.id;

@@ -22,7 +22,7 @@ module.exports = app => {
       router.get("/:id",[authJwt.verifyToken], Projector.findOne);
     
       // Retrieve count projectors by status
-      router.get("/count", [authJwt.verifyToken], Projector.countProjectors);
+      router.get("/get/count", [authJwt.verifyToken], Projector.countProjectors);
   
       // Update a Projector with id
       router.put("/:id",[authJwt.verifyToken], Projector.update);
