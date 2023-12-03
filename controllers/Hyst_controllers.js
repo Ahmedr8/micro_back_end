@@ -20,7 +20,7 @@ exports.rent = async (req, res) => {
   })
     .then(rent => {
       if (!rent) {
-        Proj.update({ status: '1' }, {
+        Proj.update({ status: '0' }, {
           where: { id: req.body.proj_id }
         })
           .then(num => {
