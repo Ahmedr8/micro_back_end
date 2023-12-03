@@ -109,6 +109,7 @@ exports.findAllByUser =async (req, res) => {
   proj_id= +Projector_rented[0].proj_id
   Projector_rented[0].rent=true;
   Projector_rented[0].status=1;
+  Projector_rented[0].id=+Projector_rented[0].id;
   const Projectors= await db.sequelize.query('SELECT * from "Projectors" p where p.id!=?',
     {replacements: [proj_id],
       type: db.sequelize.QueryTypes.SELECT
