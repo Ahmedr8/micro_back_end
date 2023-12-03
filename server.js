@@ -29,19 +29,15 @@ db.sequelize.sync()
     console.log("Failed to connect to db: " + err.message);
   });
 
+
+module.exports = io;
+
 // simple route
 require("./routes/User_Routes")(app);
 require("./routes/Proj_Routes")(app);
 require("./routes/Hyst_Routes")(app);
 
-//set socket and detect conncetion
-io.on('connection', (socket) => {
-  console.log('user connected');
-  module.exports = io;
-  socket.on('disconnect', function () {
-    console.log('user disconnected');
-  });
-})
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;

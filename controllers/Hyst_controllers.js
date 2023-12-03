@@ -3,7 +3,15 @@ const Proj = require("../models/projector_model");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const { key } = require("../secret.js");
-const io = require("../server.js");
+const io = require('../server.js'); 
+
+//set socket and detect conncetion
+io.on('connection', (socket) => {
+  console.log('user connected');
+  socket.on('disconnect', function () {
+    console.log('user disconnected!');
+  });
+})
 // Create and Save a new Hyst
 exports.rent = async (req, res) => {
   const hyst = {
@@ -28,10 +36,9 @@ exports.rent = async (req, res) => {
             if (num == 1) {
               Hyst.create(hyst)
               .then(data => {
-                /*io.on('rent', message => {
-                   //console.log('From client: ', message)
+
                   io.emit('rent', {message: "projector rented refresh your page"})
-               }) */
+               
                 res.send(data);
               })
               .catch(err => {
@@ -58,6 +65,7 @@ exports.rent = async (req, res) => {
     });
     
 };
+
 
 // Retrieve all Hysts from the database.
 exports.findAll = (req, res) => {
