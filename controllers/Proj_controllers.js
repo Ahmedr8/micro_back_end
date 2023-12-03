@@ -107,12 +107,13 @@ exports.findAllByUser =async (req, res) => {
       type: db.sequelize.QueryTypes.SELECT
   });
   proj_id= Projector_rented[0].id
-  Projector_rented[0].rent="true"
+  Projector_rented[0].rent=true;
+  Projector_rented[0].status=1;
   const Projectors= await db.sequelize.query('SELECT * from "Projectors" p where p.id!=?',
     {replacements: [proj_id],
       type: db.sequelize.QueryTypes.SELECT
   });
-  Projectors.forEach((proj) => proj.rent='false');
+  Projectors.forEach((proj) => proj.rent=false);
   Projectors.push(Projector_rented[0])
     
     res.json(Projectors);
