@@ -97,7 +97,7 @@ exports.countProjectors = async (req, res) => {
 
 }
 
-// Find Projectors with user id
+// Find Projector with user id
 exports.findAllByUser =async (req, res) => {
   const user_id = req.params.id;
   try{
@@ -108,18 +108,18 @@ exports.findAllByUser =async (req, res) => {
   });
   proj_id= Projector_rented[0].id
   Projector_rented[0].rent="true"
-  const Projectors= await db.sequelize.query('SELECT * from "Projectors" p where p.id!=?',
+  /*const Projectors= await db.sequelize.query('SELECT * from "Projectors" p where p.id!=?',
     {replacements: [proj_id],
       type: db.sequelize.QueryTypes.SELECT
   });
   Projectors.forEach((proj) => proj.rent='false');
-  Projectors.push(Projector_rented[0])
+  Projectors.push(Projector_rented[0])*/
     
-    res.json(Projectors);
+    res.json(Projector_rented[0]);
   }catch (error) {        
       console.log(error);
       res.status(500).send({
-        message: "Error retrieving Projectors with user id=" + user_id
+        message: "Error retrieving Projector with user id=" + user_id
       });
       
     }
