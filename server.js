@@ -2,9 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const io = new Server;
-
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const io = new Server(server);
 
 var corsOptions = {
   origin: "*"
