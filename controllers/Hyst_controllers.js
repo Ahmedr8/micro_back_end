@@ -3,6 +3,7 @@ const Proj = require("../models/projector_model");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const { key } = require("../secret.js");
+const socket = require("../server.js");
 // Create and Save a new Hyst
 exports.rent = async (req, res) => {
   const hyst = {
@@ -27,6 +28,10 @@ exports.rent = async (req, res) => {
             if (num == 1) {
               Hyst.create(hyst)
               .then(data => {
+                socket.on('rent', message => {
+                   console.log('From client: ', message)
+                  socket.emit('rent', {message: "projector rented refresh your page"})
+               })
                 res.send(data);
               })
               .catch(err => {

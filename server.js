@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { Server } = require("socket.io");
+const io = new Server;
 
 const app = express();
 
@@ -30,6 +32,16 @@ db.sequelize.sync()
 require("./routes/User_Routes")(app);
 require("./routes/Proj_Routes")(app);
 require("./routes/Hyst_Routes")(app);
+
+//set socket and detect conncetion
+io.on('connection', (socket) => {
+  console.log('user connected');
+  module.exports = socket;
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
+  });
+})
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

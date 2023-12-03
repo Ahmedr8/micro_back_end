@@ -99,7 +99,7 @@ exports.countProjectors = async (req, res) => {
 exports.findAllByUser =async (req, res) => {
   const user_id = req.params.id;
   try{
-    ch='0'
+    ch='1'
     const Projector_rented= await db.sequelize.query('SELECT * from "Projectors" p,"Hystorique" h where p.id=h.proj_id and h.status=? and h.user_id=?',
     {replacements: [ch,user_id],
       type: db.sequelize.QueryTypes.SELECT
