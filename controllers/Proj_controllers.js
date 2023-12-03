@@ -28,7 +28,9 @@ exports.create = (req, res) => {
 // Retrieve all Projs from the database.
 exports.findAll = (req, res) => {
     
-    Proj.findAll()
+  Proj.findAll({
+      order: [['status', 'ASC']]
+    })
       .then(data => {
         res.send(data);
       })
