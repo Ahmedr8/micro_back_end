@@ -28,10 +28,10 @@ exports.rent = async (req, res) => {
             if (num == 1) {
               Hyst.create(hyst)
               .then(data => {
-                io.on('rent', message => {
+                /*io.on('rent', message => {
                    //console.log('From client: ', message)
                   io.emit('rent', {message: "projector rented refresh your page"})
-               })
+               }) */
                 res.send(data);
               })
               .catch(err => {
