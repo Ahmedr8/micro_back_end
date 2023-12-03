@@ -10,7 +10,7 @@ exports.rent = async (req, res) => {
     user_id: req.body.user_id,
     start_date: req.body.start_date,
     end_date:req.body.end_date,
-    status:0
+    status:1
   };
   await Hyst.findOne({
     where: {
@@ -95,7 +95,7 @@ exports.return = async (req, res) => {
   const id = req.params.id;
   const hyst = {
     end_date:req.body.end_date,
-    status:1
+    status:0
   };
   let user_id;
   let token = req.headers["x-access-token"];
@@ -105,7 +105,7 @@ exports.return = async (req, res) => {
       await Hyst.findOne({
         where: {
           user_id: user_id,
-          status:'0',
+          status:'1',
            id : id
 
         }
