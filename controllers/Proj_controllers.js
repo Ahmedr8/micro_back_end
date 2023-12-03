@@ -102,22 +102,30 @@ exports.findAllByUser =async (req, res) => {
   const user_id = req.params.id;
   try{
     ch='1'
-    const Projector_rented= await db.sequelize.query('SELECT * from "Projectors" p,"Hystorique" h where p.id=h.proj_id and h.status=? and h.user_id=?',
+    const Projector_rented= await db.sequelize.query('SELECT * from "Projectors" p,"Hystorique" h where p.id=h.proj_id and h.status=? and h.user_id=? ',
     {replacements: [ch,user_id],
       type: db.sequelize.QueryTypes.SELECT
   });
+  if(Projector_rented[0]){
   proj_id= +Projector_rented[0].proj_id
   Projector_rented[0].rent=true;
   Projector_rented[0].status=1;
   Projector_rented[0].id=+Projector_rented[0].id;
-  const Projectors= await db.sequelize.query('SELECT * from "Projectors" p where p.id!=?',
+  const Projectors= await db.sequelize.query('SELECT * from "Projectors" p where p.id!=? order by status',
     {replacements: [proj_id],
       type: db.sequelize.QueryTypes.SELECT
   });
   Projectors.forEach((proj) => proj.rent=false);
   Projectors.push(Projector_rented[0])
-    
-    res.json(Projectors);
+  res.json(Projectors);
+}else{
+  const Projectors= await db.sequelize.query('SELECT * from "Projectors" p order by status ',
+    {
+      type: db.sequelize.QueryTypes.SELECT
+  });
+  Projectors.forEach((proj) => proj.rent=false);
+  res.json(Projectors);
+} 
   }catch (error) {        
       console.log(error);
       res.status(500).send({
