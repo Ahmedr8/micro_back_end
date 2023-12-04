@@ -37,7 +37,7 @@ exports.rent = async (req, res) => {
               Hyst.create(hyst)
               .then(data => {
 
-                  io.emit('rent', {message: "projector rented refresh your page"})
+                  io.emit('rent', { summary:"Projector rented", message: "User with id="+hyst.user_id+" has rented the projector with the id="+hyst.proj_id })
                
                 res.send(data);
               })
@@ -135,6 +135,7 @@ exports.return = async (req, res) => {
             })
               .then(num => {
                 if (num == 1) {
+                  io.emit('rent', { summary:"Projector returned", message: "User with id="+user_id+" has return the projector with the id="+rent.proj_id })
                   res.send({
                     message: "proj was returned successfully."
                   });
