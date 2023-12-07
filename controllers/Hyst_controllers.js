@@ -39,7 +39,7 @@ exports.rent = async (req, res) => {
 
                   io.emit('rent', { summary:"Projector rented", message: "User with id="+hyst.user_id+" has rented the projector with the id="+hyst.proj_id })
                
-                res.send(data);
+                res.send({ ...data, message: "Projector was borrowed successfully." });
               })
               .catch(err => {
                 res.status(500).send({
@@ -137,24 +137,24 @@ exports.return = async (req, res) => {
                 if (num == 1) {
                   io.emit('rent', { summary:"Projector returned", message: "User with id="+user_id+" has return the projector with the id="+rent.proj_id })
                   res.send({
-                    message: "proj was returned successfully."
+                    message: "Projector was returned successfully."
                   });
                 } else {
                   res.send({
-                    message: `Cannot return Proj with hyst_id=${id}. Maybe proj was not found or req.body is empty!`
+                    message: `Cannot return projector with hyst_id=${id}. Maybe proj was not found or req.body is empty!`
                   });
                 }
               })
               .catch(err => {
                 res.status(500).send({
-                  message: "Error returning proj with hyst_id=" + id
+                  message: "Error returning projector with hyst_id=" + id
                 });
               });
           }
         })
         .catch(err => {
           res.status(500).send({
-            message: "Error returning Proj with id=" + id
+            message: "Error returning projector with id=" + id
           });
         });
       }else{
